@@ -1,625 +1,100 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Добавить в конец файла */
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-    background: #0a0a0a;
-    color: rgba(255, 255, 255, 0.87);
-    -webkit-font-smoothing: antialiased;
-    overflow: hidden;
-}
-
-/* Background */
-.background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    background: #0a0a0a;
-    overflow: hidden;
-}
-
-.bg-circle {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.15;
-    animation: circleFloat 20s ease-in-out infinite;
-}
-
-.bg-circle:nth-child(1) {
-    width: 500px;
-    height: 500px;
-    background: #ff4444;
-    top: -100px;
-    left: -100px;
-}
-
-.bg-circle:nth-child(2) {
-    width: 400px;
-    height: 400px;
-    background: #44ff88;
-    bottom: -100px;
-    right: -100px;
-    animation-delay: 5s;
-}
-
-.bg-circle:nth-child(3) {
-    width: 450px;
-    height: 450px;
-    background: #4488ff;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation-delay: 10s;
-}
-
-.bg-circle:nth-child(4) {
-    width: 350px;
-    height: 350px;
-    background: #ff44aa;
-    bottom: 20%;
-    left: 20%;
-    animation-delay: 15s;
-}
-
-@keyframes circleFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(50px, -30px) scale(1.1); }
-    50% { transform: translate(-30px, 50px) scale(0.9); }
-    75% { transform: translate(30px, 30px) scale(1.05); }
-}
-
-/* Splash Screen */
-.splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-
-.splash-screen.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.splash-icon {
-    display: grid;
-    grid-template-columns: repeat(2, 60px);
-    grid-template-rows: repeat(2, 60px);
-    gap: 10px;
-}
-
-.splash-square {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 14px;
-    opacity: 0;
-    transform: scale(0) rotate(90deg);
-    animation: squareAppear 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.splash-square:nth-child(1) { animation-delay: 0.15s; }
-.splash-square:nth-child(2) { animation-delay: 0.3s; }
-.splash-square:nth-child(3) { animation-delay: 0.45s; }
-.splash-square:nth-child(4) { animation-delay: 0.6s; }
-
-@keyframes squareAppear {
-    0% { opacity: 0; transform: scale(0) rotate(90deg); }
-    60% { opacity: 1; }
-    100% { opacity: 1; transform: scale(1) rotate(0deg); }
-}
-
-/* Navbar */
-.navbar {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 40px);
-    max-width: 1200px;
-    background: rgba(30, 30, 30, 0.8);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 12px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.navbar.visible { opacity: 1; }
-
-.nav-left { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-
-.nav-logo-icon {
-    display: grid;
-    grid-template-columns: repeat(2, 14px);
-    grid-template-rows: repeat(2, 14px);
-    gap: 3px;
-    transition: all 0.3s ease;
-}
-
-.nav-logo-square {
-    width: 14px;
-    height: 14px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 3px;
-    transition: all 0.3s ease;
+/* Анимация свечения для иконки */
+@keyframes iconGlow {
+    0%, 100% { 
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.3);
+    }
+    50% { 
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.5), 0 0 32px rgba(255, 255, 255, 0.3);
+    }
 }
 
 .nav-left:hover .nav-logo-square {
     background: #fff;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.3);
+    animation: iconGlow 2s ease-in-out infinite;
     transform: scale(1.15);
 }
 
-.nav-logo-text {
-    font-size: 18px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.95);
-    transition: all 0.3s ease;
-}
-
+/* Убрать свечение с текста */
 .nav-left:hover .nav-logo-text {
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.nav-center { display: flex; gap: 8px; }
-
-.nav-btn {
-    padding: 8px 18px;
-    background: transparent;
-    border: none;
-    border-radius: 10px;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.nav-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.nav-btn.active {
-    background: rgba(255, 255, 255, 0.12);
     color: rgba(255, 255, 255, 0.95);
+    text-shadow: none;
 }
 
-.nav-right { display: flex; align-items: center; gap: 10px; }
-
-.profile-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.profile-icon {
-    width: 24px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile-icon svg {
-    width: 14px;
-    height: 14px;
-    stroke: rgba(255, 255, 255, 0.7);
-    fill: none;
-    stroke-width: 2;
-}
-
-.profile-arrow { font-size: 10px; opacity: 0.5; }
-
-/* Scroll Indicator */
-.scroll-indicator {
-    position: fixed;
-    right: 40px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.scroll-indicator.visible { opacity: 1; }
-
-.scroll-dots {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 0;
-}
-
-.scroll-dot {
-    position: relative;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    margin: 12px 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.scroll-dot:hover {
-    background: rgba(255, 255, 255, 0.35);
-    transform: scale(1.4);
-}
-
-.liquid-drop {
-    position: absolute;
-    width: 9px;
-    height: 9px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 50%;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-    transition: top 0.3s ease;
-}
-
-.scroll-dot-label {
-    position: absolute;
-    right: 22px;
-    top: 50%;
-    transform: translateY(-50%) translateX(10px);
-    background: rgba(30, 30, 30, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.8);
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s ease;
-}
-
-.scroll-dot:hover .scroll-dot-label {
-    opacity: 1;
-    transform: translateY(-50%) translateX(0);
-}
-
-/* Main Content */
-.main-content {
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    height: 100vh;
-    padding: 100px 60px 20px 20px;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-}
-
-.main-content.visible { opacity: 1; }
-
-.section {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.section-heading-row {
-    padding: 0 0 24px;
-    margin-bottom: 24px;
-    flex-shrink: 0;
-}
-
-.section-heading-row h2 {
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.section-heading-row p {
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Puzzle Grid */
-.puzzle-grid {
+/* Wiki Widgets Styles */
+.wiki-anomaly-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3px;
-    padding: 0 0 24px;
-    max-width: 1200px;
-    flex-shrink: 0;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
 }
 
-.puzzle-piece {
-    position: relative;
+.wiki-anomaly-card {
     background: rgba(255, 255, 255, 0.025);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 28px;
-    overflow: hidden;
+    border-radius: 16px;
+    padding: 24px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: default;
-}
-
-.puzzle-piece:nth-child(1) { border-radius: 20px 4px 4px 4px; }
-.puzzle-piece:nth-child(2) { border-radius: 4px 20px 4px 4px; }
-.puzzle-piece:nth-child(3) { border-radius: 4px 4px 4px 20px; }
-.puzzle-piece:nth-child(4) { border-radius: 4px 4px 20px 4px; }
-
-.puzzle-piece:hover {
-    background: rgba(255, 255, 255, 0.05);
-    z-index: 2;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-}
-
-.puzzle-piece:nth-child(1):hover { border-radius: 20px 8px 8px 8px; }
-.puzzle-piece:nth-child(2):hover { border-radius: 8px 20px 8px 8px; }
-.puzzle-piece:nth-child(3):hover { border-radius: 8px 8px 8px 20px; }
-.puzzle-piece:nth-child(4):hover { border-radius: 8px 8px 20px 8px; }
-
-.puzzle-piece::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03), transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
-
-.puzzle-piece:hover::before { opacity: 1; }
-
-.puzzle-number {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.2);
-    letter-spacing: 1px;
-    font-family: 'SF Mono', 'Fira Code', monospace;
-}
-
-.puzzle-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-    transition: all 0.3s ease;
-}
-
-.puzzle-piece:hover .puzzle-icon {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: scale(1.05);
-}
-
-.puzzle-icon svg {
-    width: 18px;
-    height: 18px;
-    stroke: rgba(255, 255, 255, 0.6);
-    fill: none;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.puzzle-title {
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.3px;
-    margin-bottom: 10px;
-    color: rgba(255, 255, 255, 0.95);
-}
-
-.puzzle-text {
-    font-size: 13px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 12px;
-}
-
-.puzzle-highlight {
-    background: rgba(255, 255, 255, 0.03);
-    border-left: 2px solid rgba(255, 255, 255, 0.12);
-    padding: 10px 14px;
-    border-radius: 0 8px 8px 0;
-}
-
-.puzzle-highlight p {
-    font-size: 12px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.puzzle-highlight strong {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.puzzle-tag {
-    display: inline-block;
-    padding: 4px 10px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 6px;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.5);
-    margin-top: 12px;
-    letter-spacing: 0.5px;
-}
-
-/* Apply Button */
-.apply-section {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 0 20px;
-}
-
-.apply-container {
-    max-width: 520px;
-    width: 100%;
-    padding: 36px 40px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
     position: relative;
     overflow: hidden;
-    text-align: center;
 }
 
-.apply-container::before {
+.wiki-anomaly-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
-.apply-title {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: rgba(255, 255, 255, 0.95);
+.wiki-anomaly-card:hover::before {
+    opacity: 1;
 }
 
-.apply-subtitle {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 24px;
-    line-height: 1.6;
-}
-
-.apply-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 28px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 12px;
-    color: rgba(255, 255, 255, 0.95);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.apply-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
-}
-
-.apply-button svg {
-    width: 16px;
-    height: 16px;
-    stroke: rgba(255, 255, 255, 0.8);
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-/* Wiki Page Styles */
-.wiki-content {
-    height: 100%;
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-.wiki-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-.wiki-content::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 3px;
-}
-
-.wiki-content::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-}
-
-.wiki-block {
-    background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 20px;
-    padding: 32px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-}
-
-.wiki-block:hover {
+.wiki-anomaly-card:hover {
     background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
-.wiki-block-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
+.anomaly-class-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
 }
 
-.wiki-block-icon {
+.anomaly-icon {
     width: 44px;
     height: 44px;
-    border-radius: 10px;
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
 }
 
-.wiki-block-icon svg {
-    width: 20px;
-    height: 20px;
+.wiki-anomaly-card:hover .anomaly-icon {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.anomaly-icon svg {
+    width: 22px;
+    height: 22px;
     stroke: rgba(255, 255, 255, 0.6);
     fill: none;
     stroke-width: 1.5;
@@ -627,50 +102,64 @@ body {
     stroke-linejoin: round;
 }
 
-.wiki-block-title {
-    font-size: 20px;
+.anomaly-title {
+    font-size: 18px;
     font-weight: 600;
+    margin-bottom: 8px;
     color: rgba(255, 255, 255, 0.95);
 }
 
-.wiki-block-text {
-    font-size: 14px;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.wiki-block-highlight {
-    background: rgba(255, 255, 255, 0.03);
-    border-left: 2px solid rgba(255, 255, 255, 0.12);
-    padding: 14px 18px;
-    border-radius: 0 10px 10px 0;
-    margin-top: 16px;
-}
-
-.wiki-block-highlight p {
+.anomaly-description {
     font-size: 13px;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 16px;
 }
 
-.wiki-block-highlight strong {
-    color: rgba(255, 255, 255, 0.9);
+.anomaly-tag {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.5px;
 }
 
-@media (max-width: 900px) {
-    .nav-center { display: none; }
-    .navbar { padding: 12px 16px; }
-    .scroll-indicator { right: 20px; }
-    .main-content { padding: 100px 20px 20px; }
-    .puzzle-grid {
-        grid-template-columns: 1fr;
-    }
-    .puzzle-piece { border-radius: 16px !important; }
-    .apply-container { padding: 28px 24px; }
+/* Цветные иконки для разных классов */
+.wiki-anomaly-card:nth-child(1) .anomaly-icon {
+    background: rgba(255, 68, 68, 0.1);
+    border-color: rgba(255, 68, 68, 0.2);
 }
 
-@media (max-width: 600px) {
-    .nav-logo-text { display: none; }
-    .profile-btn span { display: none; }
-    .scroll-indicator { display: none; }
+.wiki-anomaly-card:nth-child(1) .anomaly-icon svg {
+    stroke: #ff4444;
+}
+
+.wiki-anomaly-card:nth-child(2) .anomaly-icon {
+    background: rgba(68, 136, 255, 0.1);
+    border-color: rgba(68, 136, 255, 0.2);
+}
+
+.wiki-anomaly-card:nth-child(2) .anomaly-icon svg {
+    stroke: #4488ff;
+}
+
+.wiki-anomaly-card:nth-child(3) .anomaly-icon {
+    background: rgba(255, 170, 68, 0.1);
+    border-color: rgba(255, 170, 68, 0.2);
+}
+
+.wiki-anomaly-card:nth-child(3) .anomaly-icon svg {
+    stroke: #ffaa44;
+}
+
+.wiki-anomaly-card:nth-child(4) .anomaly-icon {
+    background: rgba(170, 68, 255, 0.1);
+    border-color: rgba(170, 68, 255, 0.2);
+}
+
+.wiki-anomaly-card:nth-child(4) .anomaly-icon svg {
+    stroke: #aa44ff;
 }
