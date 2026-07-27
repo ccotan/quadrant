@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadrant — Вики</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-icon">
+            <div class="splash-square"></div>
+            <div class="splash-square"></div>
+            <div class="splash-square"></div>
+            <div class="splash-square"></div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="nav-left">
+            <div class="nav-logo-icon">
+                <div class="nav-logo-square"></div>
+                <div class="nav-logo-square"></div>
+                <div class="nav-logo-square"></div>
+                <div class="nav-logo-square"></div>
+            </div>
+            <div class="nav-logo-text">Quadrant</div>
+        </a>
+        <div class="nav-center">
+            <a href="index.html" class="nav-btn">Заявка</a>
+            <a href="wiki.html" class="nav-btn active">Вики</a>
+        </div>
+        <div class="nav-right">
+            <button class="profile-btn">
+                <div class="profile-icon">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <span>Профиль</span>
+                <span class="profile-arrow">▼</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="main-content" id="mainContent">
+        <section class="section" id="section-0">
+            <div class="section-heading-row">
+                <h2> Вики Quadrant</h2>
+                <p>База знаний о корпорации и её протоколах</p>
+            </div>
+
+            <div class="wiki-content">
+                <div class="wiki-block">
+                    <div class="wiki-block-header">
+                        <div class="wiki-block-icon">
+                            <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-9a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v9"/></svg>
+                        </div>
+                        <h3 class="wiki-block-title">Миссия Корпорации</h3>
+                    </div>
+                    <p class="wiki-block-text">
+                        Quadrant — это закрытая инфраструктурная корпорация, обеспечивающая целостность цифровых пространств и когнитивную безопасность для граждан.
+                    </p>
+                </div>
+
+                <div class="wiki-block">
+                    <div class="wiki-block-header">
+                        <div class="wiki-block-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                        </div>
+                        <h3 class="wiki-block-title">Управление «Слепыми Зонами»</h3>
+                    </div>
+                    <p class="wiki-block-text">
+                        В современных высоконагруженных средах неизбежно возникают «слепые зоны» — участки, где базовые законы физики и логики сервера дают сбой.
+                    </p>
+                    <div class="wiki-block-highlight">
+                        <p>Наша задача не в том, чтобы удалять эти сбои (что может вызвать каскадное разрушение ядра), а в том, чтобы абсолютно и бесшовно изолировать их от Резидентов.</p>
+                    </div>
+                </div>
+
+                <div class="wiki-block">
+                    <div class="wiki-block-header">
+                        <div class="wiki-block-icon">
+                            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <h3 class="wiki-block-title">Фоновая Фильтрация</h3>
+                    </div>
+                    <p class="wiki-block-text">
+                        Пока вы взаимодействуете с миром, наши алгоритмы работают в фоновом режиме, фильтруя реальность.
+                    </p>
+                    <div class="wiki-block-highlight">
+                        <p><strong>Вы видите только то, что безопасно.</strong></p>
+                    </div>
+                </div>
+
+                <div class="wiki-block">
+                    <div class="wiki-block-header">
+                        <div class="wiki-block-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                        </div>
+                        <h3 class="wiki-block-title">Протокол Завесы</h3>
+                    </div>
+                    <p class="wiki-block-text">
+                        Наша система мониторинга в реальном времени отслеживает четыре основных класса аномалий.
+                    </p>
+                    <div class="wiki-block-highlight">
+                        <p>Как только датчики фиксируют отклонение от нормы, Протокол Завесы мгновенно изолирует объект от поля зрения и взаимодействия Граждан.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
