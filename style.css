@@ -707,3 +707,32 @@ body {
     .profile-btn span { display: none; }
     .scroll-indicator { display: none; }
 }
+
+/* Для Wiki страницы - разрешить скролл */
+.wiki-page .main-content {
+    overflow-y: auto;
+}
+
+.wiki-page .section {
+    height: auto;
+    min-height: 100vh;
+}
+
+/* Скроллбар для wiki */
+.wiki-page .main-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.wiki-page .main-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 3px;
+}
+
+.wiki-page .main-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.wiki-page .main-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
