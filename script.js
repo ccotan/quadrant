@@ -1,3 +1,4 @@
+// Splash Screen
 window.addEventListener('load', () => {
     setTimeout(() => {
         document.getElementById('splashScreen').classList.add('hidden');
@@ -5,8 +6,10 @@ window.addEventListener('load', () => {
             document.getElementById('mainContent').classList.add('visible');
             document.getElementById('navbar').classList.add('visible');
             const scrollIndicator = document.getElementById('scrollIndicator');
-            if (scrollIndicator) scrollIndicator.classList.add('visible');
-            setTimeout(() => positionDrop(0), 100);
+            if (scrollIndicator) {
+                scrollIndicator.classList.add('visible');
+                setTimeout(() => positionDrop(0), 100);
+            }
         }, 400);
     }, 2200);
 });
@@ -15,6 +18,7 @@ function handleApplyClick() {
     alert('Форма подачи заявки будет доступна soon');
 }
 
+const mainContent = document.getElementById('mainContent');
 const scrollDots = document.querySelectorAll('.scroll-dot');
 const liquidDrop = document.getElementById('liquidDrop');
 const scrollDotsContainer = document.getElementById('scrollDots');
@@ -43,13 +47,49 @@ function moveDropTo(index) {
     currentSubsection = index;
 }
 
-if (scrollDots.length > 0) {
-    scrollDots.forEach(dot => {
-        dot.addEventListener('click', () => {
-            const index = parseInt(dot.dataset.section);
-            moveDropTo(index);
+// Для Wiki страницы - скролл к секциям
+if (document.body.classList.contains('wiki-page')) {
+    const subsections = document.querySelectorAll('[id^="subsection-"]');
+    
+    if (scrollDots.length > 0) {
+        scrollDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const index = parseInt(dot.dataset.section);
+                const target = subsections[index];
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
         });
+    }
+    
+    // Обновление позиции капли при скролле
+    mainContent.addEventListener('scroll', () => {
+        const scrollTop = mainContent.scrollTop;
+        const containerRect = scrollDotsContainer.getBoundingClientRect();
+        
+        let activeIndex = 0;
+        subsections.forEach((sub, index) => {
+            const subRect = sub.getBoundingClientRect();
+            if (subRect.top <= containerRect.top + 150) {
+                activeIndex = index;
+            }
+        });
+        
+        if (activeIndex !== currentSubsection) {
+            moveDropTo(activeIndex);
+        }
     });
+} else {
+    // Для index.html - просто переключение капель
+    if (scrollDots.length > 0) {
+        scrollDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const index = parseInt(dot.dataset.section);
+                moveDropTo(index);
+            });
+        });
+    }
 }
 
 document.querySelectorAll('.nav-btn').forEach(btn => {
