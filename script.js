@@ -42,15 +42,27 @@ function positionDrop(index) {
 function moveDropTo(index) {
     if (isAnimating || index === currentSubsection) return;
     isAnimating = true;
+
+    const direction = index > currentSubsection ? 'down' : 'up';
+    liquidDrop.classList.remove('moving-down', 'moving-up');
+    void liquidDrop.offsetWidth;
+    liquidDrop.classList.add(`moving-${direction}`);
+
     positionDrop(index);
-    setTimeout(() => { isAnimating = false; }, 300);
+
+    setTimeout(() => {
+        liquidDrop.classList.remove('moving-down', 'moving-up');
+        isAnimating = false;
+    }, 300);
+
     currentSubsection = index;
 }
 
-// Для Wiki страницы - скролл к секциям
-if (document.body.classList.contains('wiki-page')) {
+// Для Wiki страницы - скролл к секциям + автопереключение капель
+if (document.documentElement.classList.contains('wiki-page')) {
     const subsections = document.querySelectorAll('[id^="subsection-"]');
-    
+
+    // Клик по капле — скролл к секции
     if (scrollDots.length > 0) {
         scrollDots.forEach(dot => {
             dot.addEventListener('click', () => {
@@ -62,36 +74,33 @@ if (document.body.classList.contains('wiki-page')) {
             });
         });
     }
-    
-    // Обновление позиции капли при скролле
+
+    // Автопереключение капель при скролле
+    let scrollTimeout;
     mainContent.addEventListener('scroll', () => {
-        const scrollTop = mainContent.scrollTop;
-        const containerRect = scrollDotsContainer.getBoundingClientRect();
-        
-        let activeIndex = 0;
-        subsections.forEach((sub, index) => {
-            const subRect = sub.getBoundingClientRect();
-            if (subRect.top <= containerRect.top + 150) {
-                activeIndex = index;
-            }
-        });
-        
-        if (activeIndex !== currentSubsection) {
-            moveDropTo(activeIndex);
-        }
-    });
-} else {
-    // Для index.html - просто переключение капель
-    if (scrollDots.length > 0) {
-        scrollDots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                const index = parseInt(dot.dataset.section);
-                moveDropTo(index);
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            requestAnimationFrame(() => {
+                const containerRect = scrollDotsContainer.getBoundingClientRect();
+                const containerCenter = containerRect.top + containerRect.height / 2;
+
+                let activeIndex = 0;
+                subsections.forEach((sub, index) => {
+                    const subRect = sub.getBoundingClientRect();
+                    if (subRect.top <= containerCenter + 100) {
+                        activeIndex = index;
+                    }
+                });
+
+                if (activeIndex !== currentSubsection) {
+                    moveDropTo(activeIndex);
+                }
             });
-        });
-    }
+        }, 50);
+    });
 }
 
+// Навигация
 document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
