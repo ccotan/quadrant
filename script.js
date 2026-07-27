@@ -1,4 +1,3 @@
-// Splash Screen
 window.addEventListener('load', () => {
     setTimeout(() => {
         document.getElementById('splashScreen').classList.add('hidden');
@@ -16,7 +15,6 @@ function handleApplyClick() {
     alert('Форма подачи заявки будет доступна soon');
 }
 
-const mainContent = document.getElementById('mainContent');
 const scrollDots = document.querySelectorAll('.scroll-dot');
 const liquidDrop = document.getElementById('liquidDrop');
 const scrollDotsContainer = document.getElementById('scrollDots');
