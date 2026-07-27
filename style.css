@@ -9,6 +9,9 @@ body {
     background: #0a0a0a;
     color: rgba(255, 255, 255, 0.87);
     -webkit-font-smoothing: antialiased;
+}
+
+body:not(.wiki-page) {
     overflow: hidden;
 }
 
@@ -162,8 +165,12 @@ body {
 }
 
 @keyframes iconGlow {
-    0%, 100% { box-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.3); }
-    50% { box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.5); }
+    0%, 100% { 
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.3);
+    }
+    50% { 
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.5), 0 0 32px rgba(255, 255, 255, 0.3);
+    }
 }
 
 .nav-left:hover .nav-logo-square {
@@ -176,11 +183,12 @@ body {
     font-size: 18px;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.95);
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .nav-left:hover .nav-logo-text {
     color: rgba(255, 255, 255, 0.95);
+    text-shadow: none;
 }
 
 .nav-center { display: flex; gap: 8px; }
@@ -323,6 +331,34 @@ body {
     padding: 100px 60px 20px 20px;
     opacity: 0;
     transition: opacity 0.6s ease;
+}
+
+.wiki-page .main-content {
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.wiki-page .section {
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+.wiki-page .main-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.wiki-page .main-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.wiki-page .main-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+.wiki-page .main-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .main-content.visible { opacity: 1; }
@@ -560,16 +596,6 @@ body {
     stroke-linejoin: round;
 }
 
-.wiki-content {
-    flex: 1;
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-.wiki-content::-webkit-scrollbar { width: 6px; }
-.wiki-content::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 3px; }
-.wiki-content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
-
 .wiki-anomaly-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -599,7 +625,9 @@ body {
     transition: opacity 0.4s ease;
 }
 
-.wiki-anomaly-card:hover::before { opacity: 1; }
+.wiki-anomaly-card:hover::before {
+    opacity: 1;
+}
 
 .wiki-anomaly-card:hover {
     background: rgba(255, 255, 255, 0.04);
@@ -622,6 +650,8 @@ body {
     width: 44px;
     height: 44px;
     border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -630,12 +660,15 @@ body {
 }
 
 .wiki-anomaly-card:hover .anomaly-icon {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
     transform: scale(1.05);
 }
 
 .anomaly-icon svg {
     width: 22px;
     height: 22px;
+    stroke: rgba(255, 255, 255, 0.6);
     fill: none;
     stroke-width: 1.5;
     stroke-linecap: round;
@@ -644,27 +677,39 @@ body {
 
 .wiki-anomaly-card:nth-child(1) .anomaly-icon {
     background: rgba(255, 68, 68, 0.1);
-    border: 1px solid rgba(255, 68, 68, 0.2);
+    border-color: rgba(255, 68, 68, 0.2);
 }
-.wiki-anomaly-card:nth-child(1) .anomaly-icon svg { stroke: #ff4444; }
+
+.wiki-anomaly-card:nth-child(1) .anomaly-icon svg {
+    stroke: #ff4444;
+}
 
 .wiki-anomaly-card:nth-child(2) .anomaly-icon {
     background: rgba(68, 136, 255, 0.1);
-    border: 1px solid rgba(68, 136, 255, 0.2);
+    border-color: rgba(68, 136, 255, 0.2);
 }
-.wiki-anomaly-card:nth-child(2) .anomaly-icon svg { stroke: #4488ff; }
+
+.wiki-anomaly-card:nth-child(2) .anomaly-icon svg {
+    stroke: #4488ff;
+}
 
 .wiki-anomaly-card:nth-child(3) .anomaly-icon {
     background: rgba(255, 170, 68, 0.1);
-    border: 1px solid rgba(255, 170, 68, 0.2);
+    border-color: rgba(255, 170, 68, 0.2);
 }
-.wiki-anomaly-card:nth-child(3) .anomaly-icon svg { stroke: #ffaa44; }
+
+.wiki-anomaly-card:nth-child(3) .anomaly-icon svg {
+    stroke: #ffaa44;
+}
 
 .wiki-anomaly-card:nth-child(4) .anomaly-icon {
     background: rgba(170, 68, 255, 0.1);
-    border: 1px solid rgba(170, 68, 255, 0.2);
+    border-color: rgba(170, 68, 255, 0.2);
 }
-.wiki-anomaly-card:nth-child(4) .anomaly-icon svg { stroke: #aa44ff; }
+
+.wiki-anomaly-card:nth-child(4) .anomaly-icon svg {
+    stroke: #aa44ff;
+}
 
 .anomaly-title {
     font-size: 18px;
@@ -696,43 +741,18 @@ body {
     .navbar { padding: 12px 16px; }
     .scroll-indicator { right: 20px; }
     .main-content { padding: 100px 20px 20px; }
-    .puzzle-grid { grid-template-columns: 1fr; }
+    .puzzle-grid {
+        grid-template-columns: 1fr;
+    }
     .puzzle-piece { border-radius: 16px !important; }
     .apply-container { padding: 28px 24px; }
-    .wiki-anomaly-grid { grid-template-columns: 1fr; }
+    .wiki-anomaly-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 600px) {
     .nav-logo-text { display: none; }
     .profile-btn span { display: none; }
     .scroll-indicator { display: none; }
-}
-
-/* Для Wiki страницы - разрешить скролл */
-.wiki-page .main-content {
-    overflow-y: auto;
-}
-
-.wiki-page .section {
-    height: auto;
-    min-height: 100vh;
-}
-
-/* Скроллбар для wiki */
-.wiki-page .main-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-.wiki-page .main-content::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 3px;
-}
-
-.wiki-page .main-content::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-}
-
-.wiki-page .main-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
 }
