@@ -194,11 +194,6 @@ body:not(.wiki-page) {
     transition: all 0.3s ease;
 }
 
-.nav-left:hover .nav-logo-text {
-    color: rgba(255, 255, 255, 0.95);
-    text-shadow: none;
-}
-
 .nav-center { display: flex; gap: 8px; }
 
 .nav-btn {
