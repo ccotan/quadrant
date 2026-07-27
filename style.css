@@ -1,13 +1,169 @@
-/* Добавить в конец файла */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* Анимация свечения для иконки */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+    background: #0a0a0a;
+    color: rgba(255, 255, 255, 0.87);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: #0a0a0a;
+    overflow: hidden;
+}
+
+.bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    animation: circleFloat 20s ease-in-out infinite;
+}
+
+.bg-circle:nth-child(1) {
+    width: 500px;
+    height: 500px;
+    background: #ff4444;
+    top: -100px;
+    left: -100px;
+}
+
+.bg-circle:nth-child(2) {
+    width: 400px;
+    height: 400px;
+    background: #44ff88;
+    bottom: -100px;
+    right: -100px;
+    animation-delay: 5s;
+}
+
+.bg-circle:nth-child(3) {
+    width: 450px;
+    height: 450px;
+    background: #4488ff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: 10s;
+}
+
+.bg-circle:nth-child(4) {
+    width: 350px;
+    height: 350px;
+    background: #ff44aa;
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 15s;
+}
+
+@keyframes circleFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(50px, -30px) scale(1.1); }
+    50% { transform: translate(-30px, 50px) scale(0.9); }
+    75% { transform: translate(30px, 30px) scale(1.05); }
+}
+
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.splash-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.splash-icon {
+    display: grid;
+    grid-template-columns: repeat(2, 60px);
+    grid-template-rows: repeat(2, 60px);
+    gap: 10px;
+}
+
+.splash-square {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 14px;
+    opacity: 0;
+    transform: scale(0) rotate(90deg);
+    animation: squareAppear 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.splash-square:nth-child(1) { animation-delay: 0.15s; }
+.splash-square:nth-child(2) { animation-delay: 0.3s; }
+.splash-square:nth-child(3) { animation-delay: 0.45s; }
+.splash-square:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes squareAppear {
+    0% { opacity: 0; transform: scale(0) rotate(90deg); }
+    60% { opacity: 1; }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.navbar {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    background: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.navbar.visible { opacity: 1; }
+
+.nav-left { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; }
+
+.nav-logo-icon {
+    display: grid;
+    grid-template-columns: repeat(2, 14px);
+    grid-template-rows: repeat(2, 14px);
+    gap: 3px;
+    transition: all 0.3s ease;
+}
+
+.nav-logo-square {
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
 @keyframes iconGlow {
-    0%, 100% { 
-        box-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.3);
-    }
-    50% { 
-        box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.5), 0 0 32px rgba(255, 255, 255, 0.3);
-    }
+    0%, 100% { box-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.3); }
+    50% { box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.5); }
 }
 
 .nav-left:hover .nav-logo-square {
@@ -16,150 +172,148 @@
     transform: scale(1.15);
 }
 
-/* Убрать свечение с текста */
+.nav-logo-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    transition: color 0.3s ease;
+}
+
 .nav-left:hover .nav-logo-text {
     color: rgba(255, 255, 255, 0.95);
-    text-shadow: none;
 }
 
-/* Wiki Widgets Styles */
-.wiki-anomaly-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px 0;
+.nav-center { display: flex; gap: 8px; }
+
+.nav-btn {
+    padding: 8px 18px;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.wiki-anomaly-card {
-    background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 24px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
 }
 
-.wiki-anomaly-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
+.nav-btn.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.95);
 }
 
-.wiki-anomaly-card:hover::before {
-    opacity: 1;
+.nav-right { display: flex; align-items: center; gap: 10px; }
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
 }
 
-.wiki-anomaly-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.12);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-}
-
-.anomaly-class-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.3);
-    letter-spacing: 1px;
-}
-
-.anomaly-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+.profile-icon {
+    width: 24px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
+}
+
+.profile-icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: rgba(255, 255, 255, 0.7);
+    fill: none;
+    stroke-width: 2;
+}
+
+.profile-arrow { font-size: 10px; opacity: 0.5; }
+
+.scroll-indicator {
+    position: fixed;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.scroll-indicator.visible { opacity: 1; }
+
+.scroll-dots {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.scroll-dot {
+    position: relative;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 12px 0;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.wiki-anomaly-card:hover .anomaly-icon {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: scale(1.05);
+.scroll-dot:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(1.4);
 }
 
-.anomaly-icon svg {
-    width: 22px;
-    height: 22px;
-    stroke: rgba(255, 255, 255, 0.6);
-    fill: none;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+.liquid-drop {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    transition: top 0.3s ease;
 }
 
-.anomaly-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: rgba(255, 255, 255, 0.95);
-}
-
-.anomaly-description {
-    font-size: 13px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.55);
-    margin-bottom: 16px;
-}
-
-.anomaly-tag {
-    display: inline-block;
-    padding: 5px 12px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
+.scroll-dot-label {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 6px;
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
 }
 
-/* Цветные иконки для разных классов */
-.wiki-anomaly-card:nth-child(1) .anomaly-icon {
-    background: rgba(255, 68, 68, 0.1);
-    border-color: rgba(255, 68, 68, 0.2);
+.scroll-dot:hover .scroll-dot-label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
 }
 
-.wiki-anomaly-card:nth-child(1) .anomaly-icon svg {
-    stroke: #ff4444;
-}
-
-.wiki-anomaly-card:nth-child(2) .anomaly-icon {
-    background: rgba(68, 136, 255, 0.1);
-    border-color: rgba(68, 136, 255, 0.2);
-}
-
-.wiki-anomaly-card:nth-child(2) .anomaly-icon svg {
-    stroke: #4488ff;
-}
-
-.wiki-anomaly-card:nth-child(3) .anomaly-icon {
-    background: rgba(255, 170, 68, 0.1);
-    border-color: rgba(255, 170, 68, 0.2);
-}
-
-.wiki-anomaly-card:nth-child(3) .anomaly-icon svg {
-    stroke: #ffaa44;
-}
-
-.wiki-anomaly-card:nth-child(4) .anomaly-icon {
-    background: rgba(170, 68, 255, 0.1);
-    border-color: rgba(170, 68, 255, 0.2);
-}
-
-.wiki-anomaly-card:nth-child(4) .anomaly-icon svg {
-    stroke: #aa44ff;
-}
+.main-content {
+   
