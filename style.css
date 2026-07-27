@@ -316,4 +316,394 @@ body {
 }
 
 .main-content {
-   
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    height: 100vh;
+    padding: 100px 60px 20px 20px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.main-content.visible { opacity: 1; }
+
+.section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-heading-row {
+    padding: 0 0 24px;
+    margin-bottom: 24px;
+    flex-shrink: 0;
+}
+
+.section-heading-row h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.section-heading-row p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.puzzle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    padding: 0 0 24px;
+    max-width: 1200px;
+    flex-shrink: 0;
+}
+
+.puzzle-piece {
+    position: relative;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 28px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+}
+
+.puzzle-piece:nth-child(1) { border-radius: 20px 4px 4px 4px; }
+.puzzle-piece:nth-child(2) { border-radius: 4px 20px 4px 4px; }
+.puzzle-piece:nth-child(3) { border-radius: 4px 4px 4px 20px; }
+.puzzle-piece:nth-child(4) { border-radius: 4px 4px 20px 4px; }
+
+.puzzle-piece:hover {
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 2;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.puzzle-piece:nth-child(1):hover { border-radius: 20px 8px 8px 8px; }
+.puzzle-piece:nth-child(2):hover { border-radius: 8px 20px 8px 8px; }
+.puzzle-piece:nth-child(3):hover { border-radius: 8px 8px 8px 20px; }
+.puzzle-piece:nth-child(4):hover { border-radius: 8px 8px 20px 8px; }
+
+.puzzle-piece::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.puzzle-piece:hover::before { opacity: 1; }
+
+.puzzle-number {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.2);
+    letter-spacing: 1px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.puzzle-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+}
+
+.puzzle-piece:hover .puzzle-icon {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.puzzle-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: rgba(255, 255, 255, 0.6);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.puzzle-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.puzzle-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 12px;
+}
+
+.puzzle-highlight {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 2px solid rgba(255, 255, 255, 0.12);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+}
+
+.puzzle-highlight p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.puzzle-highlight strong {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.puzzle-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 12px;
+    letter-spacing: 0.5px;
+}
+
+.apply-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0 20px;
+}
+
+.apply-container {
+    max-width: 520px;
+    width: 100%;
+    padding: 36px 40px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.apply-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+.apply-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.apply-subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+
+.apply-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.apply-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+}
+
+.apply-button svg {
+    width: 16px;
+    height: 16px;
+    stroke: rgba(255, 255, 255, 0.8);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.wiki-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.wiki-content::-webkit-scrollbar { width: 6px; }
+.wiki-content::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 3px; }
+.wiki-content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+
+.wiki-anomaly-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.wiki-anomaly-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.wiki-anomaly-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.wiki-anomaly-card:hover::before { opacity: 1; }
+
+.wiki-anomaly-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.anomaly-class-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
+}
+
+.anomaly-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+}
+
+.wiki-anomaly-card:hover .anomaly-icon {
+    transform: scale(1.05);
+}
+
+.anomaly-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.wiki-anomaly-card:nth-child(1) .anomaly-icon {
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid rgba(255, 68, 68, 0.2);
+}
+.wiki-anomaly-card:nth-child(1) .anomaly-icon svg { stroke: #ff4444; }
+
+.wiki-anomaly-card:nth-child(2) .anomaly-icon {
+    background: rgba(68, 136, 255, 0.1);
+    border: 1px solid rgba(68, 136, 255, 0.2);
+}
+.wiki-anomaly-card:nth-child(2) .anomaly-icon svg { stroke: #4488ff; }
+
+.wiki-anomaly-card:nth-child(3) .anomaly-icon {
+    background: rgba(255, 170, 68, 0.1);
+    border: 1px solid rgba(255, 170, 68, 0.2);
+}
+.wiki-anomaly-card:nth-child(3) .anomaly-icon svg { stroke: #ffaa44; }
+
+.wiki-anomaly-card:nth-child(4) .anomaly-icon {
+    background: rgba(170, 68, 255, 0.1);
+    border: 1px solid rgba(170, 68, 255, 0.2);
+}
+.wiki-anomaly-card:nth-child(4) .anomaly-icon svg { stroke: #aa44ff; }
+
+.anomaly-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.anomaly-description {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 16px;
+}
+
+.anomaly-tag {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 900px) {
+    .nav-center { display: none; }
+    .navbar { padding: 12px 16px; }
+    .scroll-indicator { right: 20px; }
+    .main-content { padding: 100px 20px 20px; }
+    .puzzle-grid { grid-template-columns: 1fr; }
+    .puzzle-piece { border-radius: 16px !important; }
+    .apply-container { padding: 28px 24px; }
+    .wiki-anomaly-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+    .nav-logo-text { display: none; }
+    .profile-btn span { display: none; }
+    .scroll-indicator { display: none; }
+}
