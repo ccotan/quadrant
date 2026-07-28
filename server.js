@@ -1,4 +1,15 @@
 require('dotenv').config();
+const admin = require('firebase-admin');
+
+// Инициализация Firebase (читает ключ из файла firebase-key.json)
+const serviceAccount = require('./firebase-key.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+// Инициализируем базу данных Firestore
+const db = admin.firestore();
 const express = require('express');
 const session = require('express-session');
 const axios = require('axios');
